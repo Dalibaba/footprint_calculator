@@ -26,22 +26,35 @@
         />
   </div>
     <button type="button" class="btn btn-success btn-sm" @click="onClickCalculate">Calculate</button>
+  <ul style="list-style-type:none;"> 
+    <li v-for="item in options" :key="item.type">
+      <Card :data="item"/>
+    </li>
+  </ul>
   <div>
     <p>{{ this.duration }}</p>
   </div>
   </div>
 </template>
+
 <script>
 
 import axios from 'axios';
-
+import Card from './Card.vue'
 export default {
   name: 'Mobility',
+  components: {
+    Card
+  },
   data() {
     return {
       start: '',
       destination: '',
-      duration: ''
+      duration: '',
+      options: [
+        {type: "car", distance: 213, duration: 23, footprint: 12},
+        {type: "train", distance: 23, duration: 12, footprint: 4},
+      ]
     };
   },
   methods: {
@@ -63,4 +76,11 @@ export default {
   },
 };
 </script>
+
+<style>
+ul {
+    list-style: none;
+    padding-left: 0;
+};
+</style>
 
