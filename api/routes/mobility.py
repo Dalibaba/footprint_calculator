@@ -24,14 +24,10 @@ def get_mobility():
     coordinates_destination = response_service.get_coordinates_from_response(response_destination)
 
     coordinates = [[coordinates_start["longitude"], coordinates_start["latitude"]], [coordinates_destination["longitude"], coordinates_destination["latitude"]]]
-    print(coordinates)
     ors_client = ORS_Client(os.getenv("ORS_API_KEY"), coordinates)
     response = ors_client.send_request()
 
-    response_service.get_metrics_from_response(response)
-    #print(response)
+    duration, distance = response_service.get_metrics_from_response(response)
+    response = response_service.format_response(duration, distance)
 
-    #
-    #
-
-    return {"message": "funktioniert"}
+    return jsonify(response)

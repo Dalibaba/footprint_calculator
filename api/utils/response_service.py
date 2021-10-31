@@ -19,3 +19,8 @@ def get_metrics_from_response(response):
     distance = response["features"][0]["properties"]["summary"]["distance"]
 
     return duration, distance
+
+
+def format_response(duration, distance):
+    response = {"duration": duration, "distance": distance}
+    return response
