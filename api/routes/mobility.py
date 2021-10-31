@@ -10,10 +10,13 @@ from api.utils import response_service
 mobility = Blueprint('mobility', __name__)
 
 
-@mobility.route('/')
+@mobility.route('')
 def get_mobility():
     start = request.args.get('start', type=str)
     destination = request.args.get('destination', type=str)
+
+    if isinstance(start, str) == False or isinstance(destination, str) == False:
+        return {"message": "start or destination not valid"}
 
     api_caller = API_Caller(os.getenv("GEOCODE_URL"), os.getenv("ORS_API_KEY"))
 
