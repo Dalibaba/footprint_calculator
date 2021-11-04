@@ -12,7 +12,10 @@
     "bootstrap": "^4.6.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-progress-circle": "^1.1.2",
+    "vue-router": "^3.2.0",
+    "vue-spinner": "^1.0.4",
+    "vue2-circle-progress": "^1.2.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -14,10 +14,8 @@ mobility = Blueprint('mobility', __name__)
 def get_mobility():
     start = request.args.get('start', type=str)
     destination = request.args.get('destination', type=str)
-
-    if isinstance(start, str) == False or isinstance(destination, str) == False:
-        return {"message": "start or destination not valid"}
-
+    if not start or not destination:
+        return {"message": "start or destination not valid"}, 400
     api_caller = API_Caller(os.getenv("GEOCODE_URL"), os.getenv("ORS_API_KEY"))
     # get geocodes of start and response
     response_start = api_caller.send_request(start)

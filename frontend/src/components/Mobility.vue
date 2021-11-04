@@ -25,14 +25,29 @@
           placeholder="Destination"
         />
   </div>
-    <button type="button" class="btn btn-success btn-sm" @click="onClickCalculate">Calculate</button>
+  <div class="container">
+      <div class="row justify-content-center">
+         <button type="button" class="btn btn-success btn-sm" @click="onClickCalculate">Calculate</button>
+      </div>
+   
+  </div>
+  <div v-if="loading">
+    <div class="container">
+      <div class="row justify-content-center">
+          <ring-loader :loading="loading" :color="color1" :size="size"></ring-loader>
+      </div>
+  </div>
+  </div>
+  <div v-else>
   <ul style="list-style-type:none;"> 
     <li v-for="(item, index) in options" :key="item.duration">
       <Card :data="item" :type="index"/>
     </li>
   </ul>
-  <div>
-    <p>{{ this.duration }}</p>
+  <div class="row justify-content-center">
+      <p>{{this.errorMessage}}</p>
+  </div>
+
   </div>
   </div>
 </template>
@@ -41,21 +56,27 @@
 
 import axios from 'axios';
 import Card from './Card.vue'
+import RingLoader from 'vue-spinner/src/RingLoader.vue'
 export default {
   name: 'Mobility',
   components: {
-    Card
+    Card,
+    RingLoader,
   },
   data() {
     return {
       start: '',
       destination: '',
-      duration: '',
-      options: ''
+      options: '',
+      loading: false,
+      errorMessage: ''
     };
   },
   methods: {
     onClickCalculate() {
+      this.options = '';
+      this.errorMessage = '';
+      this.loading = true;
       const path = 'http://localhost:8000/mobility';
       axios.get(path, { params: {
   start: this.start,
@@ -63,13 +84,14 @@ export default {
 }})
         .then((res) => {
           this.options = res.data;
-          console.log(Object.keys(this.options))
-          console.log(res.data.bike)
+          
         })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-        });
+        .catch(() => {
+
+          this.errorMessage = "variables can't be read"
+ 
+        })
+        .finally(() => (this.loading = false)) // set loading to false when request finish;
       
     },
   },
