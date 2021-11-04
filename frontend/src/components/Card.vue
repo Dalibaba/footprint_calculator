@@ -1,7 +1,7 @@
 <template>
 <div class="card">
   <div class="card-header">
-    {{data.type}}
+    {{type}}
   </div>
   <div class="card-body">
     <table class="table table-hover">
@@ -33,6 +33,7 @@ export default {
   name: "Card",
   props: {
     data: Object,
+    type: String,
   },
 };
 </script>

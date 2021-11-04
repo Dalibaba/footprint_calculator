@@ -27,8 +27,8 @@
   </div>
     <button type="button" class="btn btn-success btn-sm" @click="onClickCalculate">Calculate</button>
   <ul style="list-style-type:none;"> 
-    <li v-for="item in options" :key="item.type">
-      <Card :data="item"/>
+    <li v-for="(item, index) in options" :key="item.duration">
+      <Card :data="item" :type="index"/>
     </li>
   </ul>
   <div>
@@ -51,10 +51,7 @@ export default {
       start: '',
       destination: '',
       duration: '',
-      options: [
-        {type: "car", distance: 213, duration: 23, footprint: 12},
-        {type: "train", distance: 23, duration: 12, footprint: 4},
-      ]
+      options: ''
     };
   },
   methods: {
@@ -65,7 +62,9 @@ export default {
   destination: this.destination
 }})
         .then((res) => {
-          this.duration = res.data;
+          this.options = res.data;
+          console.log(Object.keys(this.options))
+          console.log(res.data.bike)
         })
         .catch((error) => {
           // eslint-disable-next-line

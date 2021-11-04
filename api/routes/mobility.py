@@ -19,18 +19,18 @@ def get_mobility():
         return {"message": "start or destination not valid"}
 
     api_caller = API_Caller(os.getenv("GEOCODE_URL"), os.getenv("ORS_API_KEY"))
-
+    # get geocodes of start and response
     response_start = api_caller.send_request(start)
     response_destination = api_caller.send_request(destination)
-
+    # extract geolocation from response
     coordinates_start = response_service.get_coordinates_from_response(response_start)
     coordinates_destination = response_service.get_coordinates_from_response(response_destination)
-
-    coordinates = [[coordinates_start["longitude"], coordinates_start["latitude"]], [coordinates_destination["longitude"], coordinates_destination["latitude"]]]
+    # get route information from start to destination
+    coordinates = [[coordinates_start["longitude"], coordinates_start["latitude"]],
+                   [coordinates_destination["longitude"], coordinates_destination["latitude"]]]
     ors_client = ORS_Client(os.getenv("ORS_API_KEY"), coordinates)
-    response = ors_client.send_request()
+    responses_options = ors_client.send_request()
 
-    duration, distance = response_service.get_metrics_from_response(response)
-    response = response_service.format_response(duration, distance)
+    response = response_service.get_metrics_from_response_options(responses_options)
 
     return jsonify(response)
