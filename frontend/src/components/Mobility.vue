@@ -87,9 +87,7 @@ export default {
           
         })
         .catch(() => {
-
           this.errorMessage = "variables can't be read"
- 
         })
         .finally(() => (this.loading = false)) // set loading to false when request finish;
       
